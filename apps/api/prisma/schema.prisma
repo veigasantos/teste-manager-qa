@@ -1,0 +1,194 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/qa-manager.db"
+}
+enum Role {
+  ADMIN
+  QA
+  DEV
+  MANAGER
+}
+enum ExecutionStatus {
+  NOT_TESTED
+  PASSED
+  FAILED
+  BLOCKED
+}
+enum BugStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  RETEST_OK
+  REOPENED
+}
+enum Priority {
+  URGENT
+  HIGH
+  NORMAL
+  MEDIUM
+  LOW
+}
+enum Severity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+model Project {
+  id String @id @default(cuid())
+  name String
+  createdAt DateTime @default(now())
+  cases TestCase[]
+  cycles Cycle[]
+}
+model User {
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  passwordHash String
+  role Role
+  profileId String?
+  profile AccessProfile? @relation(fields: [profileId], references: [id])
+  active Boolean @default(true)
+  createdAt DateTime @default(now())
+  assignedCases TestCase[]
+  executions Execution[]
+  assignedBugs Bug[]
+  comments Comment[]
+  auditLogs AuditLog[]
+}
+model AccessProfile {
+  id String @id @default(cuid())
+  name String @unique
+  description String @default("")
+  baseRole Role @default(MANAGER)
+  permissions Json
+  system Boolean @default(false)
+  active Boolean @default(true)
+  users User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model Module {
+  id String @id @default(cuid())
+  name String @unique
+  active Boolean @default(true)
+  cases TestCase[]
+}
+model TestType {
+  id String @id @default(cuid())
+  name String @unique
+  active Boolean @default(true)
+  cases TestCase[]
+}
+model TestTemplate {
+  id String @id @default(cuid())
+  name String @unique
+  title String @default("")
+  preconditions String @default("")
+  steps Json
+  expectedResult String @default("")
+  active Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model Cycle {
+  id String @id @default(cuid())
+  name String
+  description String @default("")
+  startsAt DateTime?
+  endsAt DateTime?
+  active Boolean @default(true)
+  projectId String
+  project Project @relation(fields: [projectId], references: [id])
+  executions Execution[]
+  @@unique([projectId, name])
+}
+model TestCase {
+  id String @id @default(cuid())
+  code String @unique
+  title String
+  preconditions String @default("")
+  steps Json
+  expectedResult String
+  priority Priority @default(NORMAL)
+  testDate DateTime @default(now())
+  active Boolean @default(true)
+  projectId String
+  moduleId String
+  testTypeId String
+  assigneeId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  project Project @relation(fields: [projectId], references: [id])
+  module Module @relation(fields: [moduleId], references: [id])
+  testType TestType @relation(fields: [testTypeId], references: [id])
+  assignee User? @relation(fields: [assigneeId], references: [id])
+  executions Execution[]
+}
+model Execution {
+  id String @id @default(cuid())
+  status ExecutionStatus @default(NOT_TESTED)
+  actualResult String @default("")
+  notes String @default("")
+  executedAt DateTime @default(now())
+  testCaseId String
+  cycleId String
+  executorId String
+  testCase TestCase @relation(fields: [testCaseId], references: [id])
+  cycle Cycle @relation(fields: [cycleId], references: [id])
+  executor User @relation(fields: [executorId], references: [id])
+  bug Bug?
+  evidences Evidence[]
+  @@unique([testCaseId, cycleId])
+}
+model Bug {
+  id String @id @default(cuid())
+  description String
+  severity Severity
+  priority Priority
+  status BugStatus @default(OPEN)
+  executionId String @unique
+  assigneeId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  execution Execution @relation(fields: [executionId], references: [id])
+  assignee User? @relation(fields: [assigneeId], references: [id])
+  comments Comment[]
+  evidences Evidence[]
+}
+model Comment {
+  id String @id @default(cuid())
+  content String
+  createdAt DateTime @default(now())
+  bugId String
+  authorId String
+  bug Bug @relation(fields: [bugId], references: [id])
+  author User @relation(fields: [authorId], references: [id])
+}
+model Evidence {
+  id String @id @default(cuid())
+  name String
+  path String?
+  url String?
+  mimeType String?
+  size Int?
+  createdAt DateTime @default(now())
+  executionId String?
+  bugId String?
+  execution Execution? @relation(fields: [executionId], references: [id])
+  bug Bug? @relation(fields: [bugId], references: [id])
+}
+model AuditLog {
+  id String @id @default(cuid())
+  action String
+  entity String
+  entityId String
+  details Json?
+  createdAt DateTime @default(now())
+  actorId String
+  actor User @relation(fields: [actorId], references: [id])
+}

@@ -1,0 +1,41 @@
+{
+  "name": "@qa/api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc -p tsconfig.json && concurrently -k -n TYPES,SERVER -c yellow,cyan \"tsc -p tsconfig.json --watch --preserveWatchOutput\" \"node --watch dist/src/server.js\"",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/server.js",
+    "db:setup": "prisma generate && prisma db push && tsc -p tsconfig.json && node dist/prisma/seed.js",
+    "db:deploy": "prisma generate && prisma db push",
+    "db:seed": "tsc -p tsconfig.json && node dist/prisma/seed.js",
+    "db:cleanup": "tsc -p tsconfig.json && node dist/scripts/cleanup-inactive.js",
+    "backup": "tsc -p tsconfig.json && node dist/scripts/backup.js",
+    "restore": "tsc -p tsconfig.json && node dist/scripts/restore.js",
+    "test": "tsc -p tsconfig.json --noEmit",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/cors": "^10.1.0",
+    "@fastify/jwt": "^10.2.0",
+    "@fastify/multipart": "^9.2.1",
+    "@fastify/rate-limit": "^11.1.0",
+    "@fastify/static": "^10.1.0",
+    "@prisma/client": "^6.19.0",
+    "@qa/shared": "*",
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.2.3",
+    "exceljs": "^4.4.0",
+    "fastify": "^5.6.2",
+    "fastify-plugin": "^5.1.0",
+    "pdfkit": "^0.17.2",
+    "prisma": "^6.19.3",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/pdfkit": "^0.17.3",
+    "typescript": "^5.9.3"
+  }
+}

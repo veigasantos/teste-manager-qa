@@ -1,0 +1,39 @@
+.environmentFailure{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;color:#263d42}.environmentFailure>svg{color:#0d9488;margin-bottom:12px}.environmentFailure h2{margin-bottom:6px}.environmentFailure p{color:#68787c;max-width:460px}.environmentFailure .actions{margin-top:14px}
+.tableWrap{cursor:grab;scroll-behavior:smooth}.tableWrap.isDragging{cursor:grabbing;scroll-behavior:auto;user-select:none}.tableWrap button,.tableWrap input,.tableWrap select,.tableWrap textarea,.tableWrap summary{cursor:pointer}.nav button{position:relative}.navBadge{margin-left:auto;min-width:19px;height:19px;border-radius:10px;background:#ef5b54;color:white;display:grid;place-items:center;padding:0 5px;font-size:10px;line-height:1}.menuCollapsed .navBadge{position:absolute;right:2px;top:2px;min-width:16px;height:16px;font-size:9px}
+.catalogList{width:100%;border-top:1px solid var(--border);margin-top:16px;padding-top:14px}.catalogList h3{margin-bottom:8px}.catalogList>div{display:flex;justify-content:space-between;align-items:center;min-height:40px;padding:6px 2px;border-bottom:1px solid #edf1f1}.modelFields{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}.modelFields input{grid-column:1/-1}.modelFields textarea{min-height:75px;border:1px solid #cedada;border-radius:8px;padding:9px;resize:vertical}.managedUsers>div{grid-template-columns:1fr 150px 65px 32px}.deleteUserButton{width:31px;height:31px;padding:0;display:grid;place-items:center}.deleteUserButton:disabled{opacity:.3;cursor:not-allowed}@media(max-width:750px){.modelFields{grid-template-columns:1fr}.managedUsers>div{grid-template-columns:1fr 1fr auto}.managedUsers>div>span{grid-column:1/-1}}
+.catalogActions{display:flex;gap:5px}
+
+/* Feedback visual de hover/active nos controles clicáveis — importante para
+   treinamento e suporte, onde a ausência de retorno visual confunde quem
+   tem menos familiaridade com interfaces. Tom esverdeado discreto, a
+   partir da própria paleta do sistema (--mint, já definida e não usada). */
+.btn,.iconBtn,.quick button,.metric,.sidebarToggle,.profileList button,.settingsTabs button,.statusToggle{transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+
+.btn:not(:disabled):hover{background:var(--mint);border-color:#9ed4c9}
+.btn:not(:disabled):active{background:#cdeee5;border-color:#7fc4b7}
+.btn.primary:not(:disabled):hover{background:#0b7d73;border-color:#0b7d73}
+.btn.primary:not(:disabled):active{background:#096b62;border-color:#096b62}
+.btn.danger:not(:disabled):hover{background:#fdeceb;border-color:#f0b8b2}
+.btn.danger:not(:disabled):active{background:#fbdedb;border-color:#e8a29b}
+
+.iconBtn:not(:disabled):hover{background:var(--mint);border-color:#9ed4c9;color:#0b7d73}
+.iconBtn:not(:disabled):active{background:#cdeee5;border-color:#7fc4b7}
+.iconBtn.danger:not(:disabled):hover{background:#fdeceb;border-color:#f0b8b2;color:#b42318}
+.iconBtn.danger:not(:disabled):active{background:#fbdedb;border-color:#e8a29b}
+
+.quick button:not(.active):hover{background:var(--mint);border-color:#9ed4c9}
+.quick button:not(.active):active{background:#cdeee5;border-color:#7fc4b7}
+
+.sidebarToggle:hover{background:var(--mint);border-color:#9ed4c9;color:#0b7d73}
+.sidebarToggle:active{background:#cdeee5}
+
+.settingsTabs button:hover{background:var(--mint);color:#087c73}
+.profileList button:hover{background:var(--mint);border-color:#9ed4c9}
+.profileList button:active{background:#cdeee5}
+
+.statusToggle:hover{filter:brightness(.96)}
+.statusToggle:active{filter:brightness(.9)}
+
+.deleteUserButton:not(:disabled):hover{background:#fdeceb;border-color:#f0b8b2}
+
+.metric:hover{background:var(--mint);border-color:#9ed4c9}

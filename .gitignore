@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+apps/api/data/*.db*
+apps/api/data/uploads/*
+!apps/api/data/uploads/.gitkeep
+apps/api/backups/
+coverage/
+*.log
+test-results/
+playwright-report/
+_tmp-*

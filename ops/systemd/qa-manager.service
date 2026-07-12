@@ -1,0 +1,26 @@
+[Unit]
+Description=QA Manager
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=qa-manager
+Group=qa-manager
+WorkingDirectory=/opt/qa-manager
+EnvironmentFile=/etc/qa-manager/qa-manager.env
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGTERM
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/opt/qa-manager/apps/api/data -/opt/qa-manager/apps/api/backups
+
+[Install]
+WantedBy=multi-user.target
