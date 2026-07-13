@@ -112,6 +112,8 @@ Clique dentro da janela do terminal que ficou rodando (a do Passo 6) e aperte `C
 | Erro mencionando `EPERM` durante `npm run setup` | Alguma janela anterior do sistema ainda está rodando e "travando" um arquivo | Feche todas as janelas de terminal abertas do projeto e rode o comando de novo |
 | Erro de política de segurança / antivírus corporativo bloqueando algo | Comum em computadores de empresa com políticas restritivas (ex.: Windows Defender Application Control) | O projeto já foi montado para evitar a maioria desses bloqueios; se acontecer, chame o time de TI/infra informando qual arquivo foi bloqueado |
 | Mensagem sobre porta `5173` ou `3333` já em uso | Já existe outro `npm run dev` rodando em outra janela | Feche a janela de terminal anterior antes de abrir uma nova |
+| Erro mencionando `Cannot find module '@qa/shared'` | O Passo 5 (`npm run setup`) foi interrompido antes de terminar | Rode `npm run setup` novamente, do início ao fim, sem fechar o terminal no meio |
+| Ao entrar com `admin@local.test`, aparece "E-mail ou senha inválidos" | O Passo 5 não terminou de cadastrar os dados de exemplo (o banco foi criado, mas sem o usuário administrador) | Rode `npm run setup` novamente; se o problema continuar, rode `npm run db:seed` |
 
 ---
 

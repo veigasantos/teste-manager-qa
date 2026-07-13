@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "concurrently -n API,WEB -c cyan,magenta \"npm run dev -w @qa/api\" \"npm run dev -w @qa/web\"",
-    "setup": "npm install && npm run db:setup -w @qa/api",
+    "setup": "npm install && npm run build -w @qa/shared && npm run db:setup -w @qa/api",
     "build": "npm run build -w @qa/shared && npm run build -w @qa/api && npm run build -w @qa/web",
     "start": "npm run start -w @qa/api",
     "test": "npm run test --workspaces --if-present",
